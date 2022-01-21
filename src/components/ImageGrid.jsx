@@ -7,7 +7,7 @@ import { IconButton } from "@mui/material";
 import GridViewIcon from '@mui/icons-material/GridView';
 import ViewArrayIcon from '@mui/icons-material/ViewArray';
 
-export default function ImageGrid(){
+export default function ImageGrid( { setSelectedImg, setImgId }){
   const [view, setView] = useState('carousel')
   const { docs } = useFirestore('images')
   console.log(docs)
@@ -24,7 +24,7 @@ export default function ImageGrid(){
       <Grid container padding={0} spacing={0}>
     {view === 'grid' && docs.map(doc => (
       <Grid item xs={9} md={6} key={doc.id}>
-        <img  className ='img' width ='400px' height='225px' src={doc.url} alt='img'/>
+        <img  onClick={()=> setSelectedImg({ url:doc.url, id: doc.id})} className ='img' width ='400px' height='225px' src={doc.url} alt='img'/>
         </Grid>
     ))}
     </Grid>
