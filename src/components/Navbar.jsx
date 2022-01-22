@@ -1,13 +1,22 @@
-import * as React from 'react';
+
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
-import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
 import { Divider } from '@mui/material';
 
+
+import { auth } from '../firebase/config'
+
+const signOut = () => {
+  auth.signOut().then(()=> {
+    window.location.reload(false)
+    console.log('sign-out successful')
+  }).catch((err)=>{
+    console.log('err:', err)
+  })
+}
 export default function ButtonAppBar() {
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -20,8 +29,8 @@ export default function ButtonAppBar() {
           </Typography>
          
 
-          
-          <Button color="inherit">Login</Button>
+        
+          <Button onClick={()=> signOut()} color="inherit">Logout</Button>
          
         </Toolbar>
       </AppBar>
