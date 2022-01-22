@@ -5,6 +5,7 @@ import { initializeApp } from "firebase/app";
 import 'firebase/storage';
 import 'firebase/firestore';
 import * as firebase from 'firebase/app'
+import 'firebase/auth'
 
 const apiKey = process.env.REACT_APP_API_KEY
 const authDomain = process.env.REACT_APP_AUTH_DOMAIN
@@ -34,5 +35,6 @@ const projectStorage = firebase.storage();
 const projectFirestore = firebase.firestore();
 const timestamp = firebase.firestore.FieldValue.serverTimestamp;
 const { doc, deleteDoc } = firebase.firestore()
+const auth = firebase.auth()
 
-export {doc, deleteDoc, projectStorage, projectFirestore, timestamp }
+export {auth, doc, deleteDoc, projectStorage, projectFirestore, timestamp }

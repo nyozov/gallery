@@ -7,7 +7,6 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  padding-bottom: 200px;
 
 
 }
@@ -17,6 +16,7 @@ body {
   width: 90%;
   max-width:960px;
   position:relative;
+  padding-bottom: 200px;
 }
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
