@@ -9,15 +9,20 @@ import { Divider } from '@mui/material';
 
 import { auth } from '../firebase/config'
 
-const signOut = () => {
-  auth.signOut().then(()=> {
-    window.location.reload(false)
-    console.log('sign-out successful')
-  }).catch((err)=>{
-    console.log('err:', err)
-  })
-}
-export default function ButtonAppBar() {
+
+export default function ButtonAppBar({setLoggedIn}) {
+  const signOut = () => {
+    auth.signOut().then(()=> {
+      setLoggedIn(false)
+     
+
+  
+    
+      console.log('sign-out successful')
+    }).catch((err)=>{
+      console.log('err:', err)
+    })
+  }
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar elevation={0} className='navbar' sx={{p:2, color:'black' ,background:'transparent'}} position="static">

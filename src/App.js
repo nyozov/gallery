@@ -1,38 +1,43 @@
 import Navbar from "./components/Navbar";
-import Title from "./components/Title";
 import UploadForm from "./components/UploadForm";
 import ImageGrid from "./components/ImageGrid";
 import Modal from "./components/Modal";
-import { useState, useContext, useEffect } from "react";
+import { useState } from "react";
 import LoginPage from "./components/LoginPage";
 import { auth } from "./firebase/config";
-import { UserContext } from "./hooks/UserContext";
 
 function App() {
   const [selectedImg, setSelectedImg] = useState(null);
-  const [currentUser, setCurrentUser] = useState({ id: "", name: "" });
+  const [LoggedIn, setLoggedIn] = useState(false);
+
+  auth.onAuthStateChanged((user) => {
+    if (user) {
+      console.log("auth worked");
+      console.log(user);
+    } else {
+      console.log("auth did not work");
+    }
+  });
 
   return (
     <div className="App">
-      <UserContext.Provider value={{ currentUser, setCurrentUser }}>
-        {auth.currentUser == null && <LoginPage />}
+      {!LoggedIn && <LoginPage setLoggedIn={setLoggedIn} />}
 
-        {auth.currentUser && (
-          <>
-            <Navbar />
-            <div className="main-section">
-              <UploadForm currentUser={currentUser} />
-              <ImageGrid setSelectedImg={setSelectedImg} />
-              {selectedImg && (
-                <Modal
-                  selectedImg={selectedImg}
-                  setSelectedImg={setSelectedImg}
-                />
-              )}
-            </div>
-          </>
-        )}
-      </UserContext.Provider>
+      {LoggedIn && (
+        <>
+          <Navbar setLoggedIn={setLoggedIn} />
+          <div className="main-section">
+            <UploadForm />
+            <ImageGrid setSelectedImg={setSelectedImg} />
+            {selectedImg && (
+              <Modal
+                selectedImg={selectedImg}
+                setSelectedImg={setSelectedImg}
+              />
+            )}
+          </div>
+        </>
+      )}
     </div>
   );
 }

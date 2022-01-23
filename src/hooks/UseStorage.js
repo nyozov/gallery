@@ -1,5 +1,4 @@
 import { useState, useEffect, useContext } from 'react'
-import { UserContext } from './UserContext';
 import { auth } from '../firebase/config';
 
 
@@ -10,7 +9,6 @@ const useStorage = (file) => {
   const [error, setError] = useState(null);
   const [url, setUrl] = useState(null);
 
-  const { currentUser } = useContext(UserContext)
 
   useEffect(() => {
     // references
