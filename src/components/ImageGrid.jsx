@@ -20,10 +20,10 @@ export default function ImageGrid( { setSelectedImg }){
     <div>
       
       <Box marginTop='50px'>
-      <Grid  sx={{ gridColumnStart:'1'}} container padding={0}>
+      <Grid  sx={{ gridColumnStart:'1'}} container padding={0} rowSpacing={5}>
     {docs.filter(doc => doc.userId === auth.currentUser.uid).map(filteredDoc => (
      
-      <Grid  item xs={12} md={4} key={filteredDoc.id}>
+      <Grid  item xs={12} md={6} key={filteredDoc.id}>
         <img  onClick={()=> setSelectedImg({ url:filteredDoc.url, id: filteredDoc.id})} className ='img' src={filteredDoc.url} alt='img'/>
         </Grid>
     

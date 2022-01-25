@@ -14,6 +14,7 @@ import MoreIcon from '@mui/icons-material/MoreVert';
 import { auth } from '../firebase/config';
 import { Button } from '@mui/material';
 import { useState } from 'react';
+import AutoComplete from './AutoComplete'
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -54,6 +55,8 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     },
   },
 }));
+
+
 
 export default function PrimarySearchAppBar({ setLoggedIn, setSearchMode }) {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -165,16 +168,16 @@ export default function PrimarySearchAppBar({ setLoggedIn, setSearchMode }) {
           >
             LENS
           </Typography>
-          <Search>
-            <SearchIconWrapper>
-              <SearchIcon 
+         
+<Search>
+  <SearchIconWrapper>
+    <SearchIcon/>
+    </SearchIconWrapper>
+  
+            <AutoComplete
             />
-            </SearchIconWrapper>
-            <StyledInputBase
-              placeholder="Search users…"
-              inputProps={{ 'aria-label': 'search' }}
-            />
-          </Search>
+            </Search>
+     
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: {  md: 'flex' } }}>
            
