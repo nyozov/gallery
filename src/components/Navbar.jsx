@@ -6,30 +6,27 @@ import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import InputBase from '@mui/material/InputBase';
-import Badge from '@mui/material/Badge';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
-import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import AccountCircle from '@mui/icons-material/AccountCircle';
-import MailIcon from '@mui/icons-material/Mail';
-import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import { auth } from '../firebase/config';
 import { Button } from '@mui/material';
 import { useState } from 'react';
+
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
   borderRadius: theme.shape.borderRadius,
-  backgroundColor: alpha(theme.palette.common.white, 0.15),
+  backgroundColor: alpha(theme.palette.common.black, 0.15),
   '&:hover': {
-    backgroundColor: alpha(theme.palette.common.white, 0.25),
+    backgroundColor: alpha(theme.palette.common.black, 0.25),
   },
   marginRight: theme.spacing(2),
   marginLeft: 0,
   width: '100%',
   [theme.breakpoints.up('sm')]: {
-    marginLeft: theme.spacing(3),
+    marginLeft: theme.spacing(8),
     width: 'auto',
   },
 }));
@@ -58,9 +55,11 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-export default function PrimarySearchAppBar({setLoggedIn}) {
+export default function PrimarySearchAppBar({ setLoggedIn, setSearchMode }) {
   const [anchorEl, setAnchorEl] = useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
+
+ 
 
   const signOut = () => {
     auth.signOut().then(()=> {
@@ -150,30 +149,26 @@ export default function PrimarySearchAppBar({setLoggedIn}) {
     </Menu>
   );
 
+
+
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      <AppBar background="transparent" position="static">
-        <Toolbar>
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="open drawer"
-            sx={{ mr: 2 }}
-          >
-         
-          </IconButton>
+    <Box  sx={{ flexGrow: 1 }}>
+      <AppBar elevation={0} sx={{  color: 'black', background:"transparent" }} position="static">
+        <Toolbar >
+    
           <Typography
-            variant="h6"
+          fontFamily="Bebas Neue"
+            variant="h4"
             noWrap
             component="div"
             sx={{ display: { xs: 'none', sm: 'block' } }}
           >
-            LENS.io
+            LENS
           </Typography>
           <Search>
             <SearchIconWrapper>
-              <SearchIcon />
+              <SearchIcon 
+            />
             </SearchIconWrapper>
             <StyledInputBase
               placeholder="Search users…"
@@ -181,7 +176,7 @@ export default function PrimarySearchAppBar({setLoggedIn}) {
             />
           </Search>
           <Box sx={{ flexGrow: 1 }} />
-          <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+          <Box sx={{ display: {  md: 'flex' } }}>
            
             <IconButton
               size="large"
@@ -195,18 +190,7 @@ export default function PrimarySearchAppBar({setLoggedIn}) {
               <AccountCircle />
             </IconButton>
           </Box>
-          <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
-            <IconButton
-              size="large"
-              aria-label="show more"
-              aria-controls={mobileMenuId}
-              aria-haspopup="true"
-              onClick={handleMobileMenuOpen}
-              color="inherit"
-            >
-              <MoreIcon />
-            </IconButton>
-          </Box>
+        
         </Toolbar>
       </AppBar>
       {renderMobileMenu}

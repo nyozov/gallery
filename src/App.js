@@ -7,11 +7,12 @@ import LoginPage from "./components/LoginPage";
 import { auth } from "./firebase/config";
 import Loading from "./components/Loading";
 
+
 function App() {
   const [selectedImg, setSelectedImg] = useState(null);
   const [LoggedIn, setLoggedIn] = useState(false);
-
-  //show loading screen while user is being found by firebase auth
+ 
+  //show loading screen while user is being fetched by firebase auth
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -20,6 +21,7 @@ function App() {
   auth.onAuthStateChanged((user) => {
     if (!user) {
       console.log("auth did not work");
+      setLoading(false)
     } else {
       console.log("auth worked");
       console.log(user);

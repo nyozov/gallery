@@ -37,4 +37,5 @@ const timestamp = firebase.firestore.FieldValue.serverTimestamp;
 const { doc, deleteDoc } = firebase.firestore()
 const auth = firebase.auth()
 
+
 export {auth, doc, deleteDoc, projectStorage, projectFirestore, timestamp }

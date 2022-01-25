@@ -13,6 +13,8 @@ import { auth } from "../firebase/config";
 import { useState } from "react";
 import GoogleButton from "react-google-button";
 import LoginIcon from "@mui/icons-material/Login";
+import { Link as RouterLink } from 'react-router-dom'
+
 
 
 
@@ -43,7 +45,6 @@ export default function SignInSide({setLoggedIn}) {
   const [signUp, setSignUp] = useState(false);
   const [registerEmail, setRegisterEmail] = useState('');
   const [registerPassword, setRegisterPassword] = useState('')
-
   const register = () => {
   
     auth.createUserWithEmailAndPassword(registerEmail, registerPassword)
@@ -97,7 +98,7 @@ export default function SignInSide({setLoggedIn}) {
           sm={4}
           md={7}
           sx={{
-            backgroundImage: "url(https://source.unsplash.com/random)",
+            backgroundImage: "url(https://images.unsplash.com/photo-1518998053901-5348d3961a04?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8YXJ0JTIwZ2FsbGVyeXxlbnwwfHwwfHw%3D&w=1000&q=80)",
             backgroundRepeat: "no-repeat",
             backgroundColor: (t) =>
               t.palette.mode === "light"
