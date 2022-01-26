@@ -11,4 +11,18 @@ const handleDelete = async (url) => {
   }
 }
 
-export default handleDelete
+  const addUserToDB = (uid, email) => {
+    projectFirestore.collection("users").doc(uid).set({
+      email,
+      
+  })
+  .then(() => {
+      console.log("Document successfully written!");
+  })
+  .catch((error) => {
+      console.error("Error writing document: ", error);
+  });
+  }
+
+
+export { handleDelete, addUserToDB }

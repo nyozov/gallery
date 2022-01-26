@@ -14,6 +14,7 @@ import { useState } from "react";
 import GoogleButton from "react-google-button";
 import LoginIcon from "@mui/icons-material/Login";
 import { Link as RouterLink } from 'react-router-dom'
+import { addUserToDB } from '../hooks/handleDelete'
 
 
 
@@ -45,16 +46,20 @@ export default function SignInSide({setLoggedIn}) {
   const [signUp, setSignUp] = useState(false);
   const [registerEmail, setRegisterEmail] = useState('');
   const [registerPassword, setRegisterPassword] = useState('')
+
+  
+
   const register = () => {
   
     auth.createUserWithEmailAndPassword(registerEmail, registerPassword)
       .then((userCredential) => {
+        addUserToDB(userCredential.user.uid, userCredential.user.email)
        setLoggedIn(true)
         // Signed in 
         // const user = userCredential.user;
         // console.log(user)
         // console.log('current user = ', auth.currentUser)
-        console.log(auth.currentUser.uid)
+        console.log('usercredentials = ', userCredential)
         
         
     

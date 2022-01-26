@@ -1,4 +1,4 @@
-import handleDelete from "../hooks/handleDelete"
+import { handleDelete } from "../hooks/handleDelete"
 
 export default function Modal({ selectedImg, setSelectedImg }){
   const handleClick = (e) => {
