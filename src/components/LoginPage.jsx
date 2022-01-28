@@ -78,9 +78,10 @@ export default function SignInSide({setLoggedIn}) {
       .auth()
       .signInWithPopup(provider)
       .then((result) => {
+        addUserToDB(result.user.uid, result.user.email)
         setLoggedIn(true)
+        console.log(result)
 
-        console.log('idk');
       });
   };
   const handleSubmit = (event) => {

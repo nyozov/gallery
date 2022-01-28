@@ -4,6 +4,8 @@ import Autocomplete from '@mui/material/Autocomplete';
 import CircularProgress from '@mui/material/CircularProgress';
 import { InputBase } from '@mui/material';
 import { styled, alpha } from '@mui/material/styles';
+import { projectFirestore } from '../firebase/config'
+import useFirestore from '../hooks/useFirestore';
 
 function sleep(delay = 0) {
   return new Promise((resolve) => {
@@ -48,6 +50,26 @@ export default function Asynchronous() {
   const [open, setOpen] = React.useState(false);
   const [options, setOptions] = React.useState([]);
   const loading = open && options.length === 0;
+  const [allUsers, setAllUsers] = React.useState([])
+
+  const topFilms = [
+    {title:'nyozov96'},
+    {title:'randomuser'},
+  ];
+React.useEffect(()=>{
+  projectFirestore.collection("users").get().then((querySnapshot) => {
+    querySnapshot.forEach((doc) => {
+        // doc.data() is never undefined for query doc snapshots
+        console.log(doc.id, " => ", doc.data());
+        setAllUsers(prev => [...prev, {title: doc.data().email}])
+      
+        console.log(allUsers)
+
+    });
+});
+  
+},[])
+
 
   React.useEffect(() => {
     let active = true;
@@ -60,7 +82,7 @@ export default function Asynchronous() {
       await sleep(1e3); // For demo purposes.
 
       if (active) {
-        setOptions([...topFilms]);
+        setOptions([...allUsers]);
       }
     })();
 
@@ -98,7 +120,18 @@ export default function Asynchronous() {
 }
 
 // Top films as rated by IMDb users. http://www.imdb.com/chart/top
-const topFilms = [
-  {title:'nyozov96'},
-  {title:'randomuser'}
-];
+const allUsers = () => {
+  const usersArray = []
+  const usersRef = projectFirestore.collection('users')
+  usersRef.get().then((doc) => {
+    if (doc.exists) {
+      console.log("Document data:", doc.data());
+  } else {
+      // doc.data() will be undefined in this case
+      console.log("No such document!");
+  }
+  })
+
+}
+
+console.log('all users = ', allUsers())
