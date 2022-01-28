@@ -46,6 +46,20 @@ export default function SignInSide({setLoggedIn}) {
   const [signUp, setSignUp] = useState(false);
   const [registerEmail, setRegisterEmail] = useState('');
   const [registerPassword, setRegisterPassword] = useState('')
+  const [signInEmail, setSignInEmail] = useState('');
+  const [signInPassword, setSignInPassword] = useState('')
+  const signIn = () => {
+
+    auth.signInWithEmailAndPassword(signInEmail, signInPassword)
+  .then((userCredential) => {
+    // Signed in
+    const user = userCredential.user;
+    // ...
+  })
+  .catch((error) => {
+    console.log(error.message)
+  });
+  }
 
   
 
@@ -142,10 +156,13 @@ export default function SignInSide({setLoggedIn}) {
               <Box
                 component="form"
                 noValidate
-                onSubmit={handleSubmit}
+               
                 sx={{ mt: 1 }}
               >
                 <TextField
+                onChange={e => {
+                  setSignInEmail(e.target.value)
+                }}
                   margin="normal"
                   required
                   fullWidth
@@ -156,6 +173,9 @@ export default function SignInSide({setLoggedIn}) {
                   autoFocus
                 />
                 <TextField
+                onChange={e => {
+                  setSignInPassword(e.target.value)
+                }}
               
                   margin="normal"
                   required
@@ -167,7 +187,8 @@ export default function SignInSide({setLoggedIn}) {
                   autoComplete="current-password"
                 />
                 <Button
-                  type="submit"
+                
+                  onClick={signIn}
                   fullWidth
                   variant="contained"
                   sx={{ mt: 3, mb: 2 }}
