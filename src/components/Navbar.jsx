@@ -15,6 +15,7 @@ import { auth } from '../firebase/config';
 import { Button } from '@mui/material';
 import { useState } from 'react';
 import AutoComplete from './AutoComplete'
+import { useNavigate } from 'react-router';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -58,15 +59,22 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 
 
-export default function PrimarySearchAppBar({ setLoggedIn, setSearchMode }) {
+export default function PrimarySearchAppBar({ setLoggedIn, setCurrentProfile }) {
   const [anchorEl, setAnchorEl] = useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
 
- 
-
+  const navigate = useNavigate()
+  const routeChange = (userId) => {
+    let path = userId
+    setCurrentProfile(path)
+    navigate(path)
+  }
   const signOut = () => {
     auth.signOut().then(()=> {
-      setLoggedIn(false)
+      
+      routeChange('/')
+      
+      
      
   
   
@@ -174,7 +182,7 @@ export default function PrimarySearchAppBar({ setLoggedIn, setSearchMode }) {
     <SearchIcon/>
     </SearchIconWrapper>
   
-            <AutoComplete
+            <AutoComplete setCurrentProfile={setCurrentProfile}
             />
             </Search>
      

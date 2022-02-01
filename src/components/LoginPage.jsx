@@ -15,6 +15,7 @@ import GoogleButton from "react-google-button";
 import LoginIcon from "@mui/icons-material/Login";
 import { Link as RouterLink } from 'react-router-dom'
 import { addUserToDB } from '../hooks/handleDelete'
+import { useNavigate } from 'react-router-dom'
 
 
 
@@ -42,18 +43,27 @@ function Copyright(props) {
 
 const theme = createTheme();
 
-export default function SignInSide({setLoggedIn}) {
+export default function SignInSide({setCurrentProfile, setLoggedIn}) {
   const [signUp, setSignUp] = useState(false);
   const [registerEmail, setRegisterEmail] = useState('');
   const [registerPassword, setRegisterPassword] = useState('')
   const [signInEmail, setSignInEmail] = useState('');
   const [signInPassword, setSignInPassword] = useState('')
+  const navigate = useNavigate()
+  const routeChange = (userId) => {
+   let path = userId
+   setCurrentProfile(path)
+   navigate(path)
+   
+ }
   const signIn = () => {
 
     auth.signInWithEmailAndPassword(signInEmail, signInPassword)
   .then((userCredential) => {
     // Signed in
     const user = userCredential.user;
+    setCurrentProfile(user.uid)
+    console.log(user.uid)
     // ...
   })
   .catch((error) => {
@@ -93,20 +103,14 @@ export default function SignInSide({setLoggedIn}) {
       .signInWithPopup(provider)
       .then((result) => {
         addUserToDB(result.user.uid, result.user.email)
+        setCurrentProfile(result.user.uid)
+        routeChange(result.user.uid)
         setLoggedIn(true)
         console.log(result)
 
       });
   };
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    // eslint-disable-next-line no-console
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
-  };
+ 
 
   return (
     <ThemeProvider theme={theme}>

@@ -6,6 +6,12 @@ import { useEffect, useState } from "react";
 import LoginPage from "./components/LoginPage";
 import { auth } from "./firebase/config";
 import Loading from "./components/Loading";
+import {
+  BrowserRouter as Router,
+  Routes as Switch,
+  Route,
+  Link
+} from "react-router-dom";
 
 
 function App() {
@@ -14,6 +20,9 @@ function App() {
  
   //show loading screen while user is being fetched by firebase auth
   const [loading, setLoading] = useState(false);
+  //controls which user's profile is being viewed
+  const [currentProfile, setCurrentProfile] = useState('')
+  console.log('currentprofile', currentProfile)
 
   useEffect(() => {
     setLoading(true);
@@ -31,26 +40,46 @@ function App() {
   });
 
   return (
+    <Router>
     <div className="App">
-      {loading && <Loading />}
-      {!LoggedIn && !loading && <LoginPage setLoggedIn={setLoggedIn} />}
+     
 
-      {LoggedIn && !loading && (
-        <>
-          <Navbar setLoggedIn={setLoggedIn} />
-          <div className="main-section">
-            <UploadForm />
-            <ImageGrid setSelectedImg={setSelectedImg} />
+     
+          
+          
+      
+            <Switch>
+              
+            
+              <Route path='/' element={<LoginPage
+      setCurrentProfile={setCurrentProfile} 
+      setLoggedIn={setLoggedIn}
+       />} />
+              <Route path={currentProfile} element= {
+                <div className="main-section">
+               
+                <Navbar
+                setLoggedIn={setLoggedIn}
+                setCurrentProfile={setCurrentProfile}
+                 />
+                 <UploadForm />
+            <ImageGrid currentProfile={currentProfile} setSelectedImg={setSelectedImg} />
             {selectedImg && (
               <Modal
                 selectedImg={selectedImg}
                 setSelectedImg={setSelectedImg}
               />
             )}
-          </div>
-        </>
-      )}
+            </div>
+               } />
+              
+             </Switch>
+            
+            
+          
+       
     </div>
+    </Router>
   );
 }
 
