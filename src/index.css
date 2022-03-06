@@ -61,3 +61,10 @@ code {
   margin: 60px auto;
   box-shadow: 3px 5px 7px rgba(0, 0, 0, 0.5);
 }
+
+@media only screen and (max-width: 600px) {
+.css-1t29gy6-MuiToolbar-root{
+  max-width: 350px;
+}
+
+}

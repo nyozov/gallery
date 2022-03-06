@@ -15,7 +15,7 @@ import GoogleButton from "react-google-button";
 import LoginIcon from "@mui/icons-material/Login";
 import { Link as RouterLink } from 'react-router-dom'
 import { addUserToDB } from '../hooks/handleDelete'
-import { useNavigate } from 'react-router-dom'
+
 
 
 
@@ -49,13 +49,9 @@ export default function SignInSide({setCurrentProfile, setLoggedIn}) {
   const [registerPassword, setRegisterPassword] = useState('')
   const [signInEmail, setSignInEmail] = useState('');
   const [signInPassword, setSignInPassword] = useState('')
-  const navigate = useNavigate()
-  const routeChange = (userId) => {
-   let path = userId
-   setCurrentProfile(path)
-   navigate(path)
-   
- }
+
+  
+ 
   const signIn = () => {
 
     auth.signInWithEmailAndPassword(signInEmail, signInPassword)
@@ -104,7 +100,7 @@ export default function SignInSide({setCurrentProfile, setLoggedIn}) {
       .then((result) => {
         addUserToDB(result.user.uid, result.user.email)
         setCurrentProfile(result.user.uid)
-        routeChange(result.user.uid)
+      
         setLoggedIn(true)
         console.log(result)
 

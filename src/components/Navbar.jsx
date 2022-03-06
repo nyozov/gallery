@@ -14,8 +14,7 @@ import MoreIcon from '@mui/icons-material/MoreVert';
 import { auth } from '../firebase/config';
 import { Button } from '@mui/material';
 import { useState } from 'react';
-import AutoComplete from './AutoComplete'
-import { useNavigate } from 'react-router';
+
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -63,16 +62,12 @@ export default function PrimarySearchAppBar({ setLoggedIn, setCurrentProfile }) 
   const [anchorEl, setAnchorEl] = useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
 
-  const navigate = useNavigate()
-  const routeChange = (userId) => {
-    let path = userId
-    setCurrentProfile(path)
-    navigate(path)
-  }
+
+
   const signOut = () => {
     auth.signOut().then(()=> {
       
-      routeChange('/')
+      
       
       
      
@@ -182,8 +177,7 @@ export default function PrimarySearchAppBar({ setLoggedIn, setCurrentProfile }) 
     <SearchIcon/>
     </SearchIconWrapper>
   
-            <AutoComplete setCurrentProfile={setCurrentProfile}
-            />
+           
             </Search>
      
           <Box sx={{ flexGrow: 1 }} />

@@ -23,10 +23,16 @@ function App() {
   //controls which user's profile is being viewed
   const [currentProfile, setCurrentProfile] = useState('')
   console.log('currentprofile', currentProfile)
+  
 
-  useEffect(() => {
-    setLoading(true);
-  }, []);
+  // useEffect(() => {
+  //   setLoading(true);
+  //   setCurrentProfile(JSON.parse(window.localStorage.getItem('currentProfile')))
+  // }, []);
+  // useEffect(() => {
+  //   window.localStorage.setItem('currentProfile', currentProfile);
+  // }, [currentProfile]);
+  
   auth.onAuthStateChanged((user) => {
     if (!user) {
       console.log("auth did not work");
@@ -40,7 +46,7 @@ function App() {
   });
 
   return (
-    <Router>
+    
     <div className="App">
      
 
@@ -48,15 +54,12 @@ function App() {
           
           
       
-            <Switch>
-              
-            
-              <Route path='/' element={<LoginPage
+         {!currentProfile &&  <LoginPage
       setCurrentProfile={setCurrentProfile} 
       setLoggedIn={setLoggedIn}
-       />} />
-              <Route path={currentProfile} element= {
-                <div className="main-section">
+       />}
+              
+                {currentProfile && <div className="main-section">
                
                 <Navbar
                 setLoggedIn={setLoggedIn}
@@ -70,16 +73,15 @@ function App() {
                 setSelectedImg={setSelectedImg}
               />
             )}
-            </div>
-               } />
+            </div>}
+               
               
-             </Switch>
-            
+         
             
           
        
     </div>
-    </Router>
+    
   );
 }
 
