@@ -8,14 +8,20 @@ import { auth } from "./firebase/config";
 import Loading from "./components/Loading";
 import {
   BrowserRouter as Router,
-  Routes as Switch,
+  Routes,
   Route,
   Link,
 } from "react-router-dom";
 
+import DeleteMenu from './components/DeleteMenu'
+import { Delete } from "@mui/icons-material";
+
 function App() {
   const [selectedImg, setSelectedImg] = useState(null);
   const [LoggedIn, setLoggedIn] = useState(false);
+
+  const [deleteOpen, setDeleteOpen] = useState(false);
+  const [imageOpen, setImageOpen] = useState(false);
 
   //show loading screen while user is being fetched by firebase auth
   const [loading, setLoading] = useState(false);
@@ -44,31 +50,58 @@ function App() {
   });
 
   return (
+    <Router>
     <div className="App">
-      {!currentProfile && (
-        <LoginPage
-          setCurrentProfile={setCurrentProfile}
-          setLoggedIn={setLoggedIn}
-        />
-      )}
+      <Routes>
+      <Route
+              path="/"
+              element={ 
+                <div>
+                
+                {!currentProfile && (
+                <LoginPage
+                  setCurrentProfile={setCurrentProfile}
+                  setLoggedIn={setLoggedIn}
+                />
+              )}
+        
+              {currentProfile && (
+                <div className="main-section">
+                  <Navbar
+                    setLoggedIn={setLoggedIn}
+                    setCurrentProfile={setCurrentProfile}
+                  />
+                  
+                  <ImageGrid
+                    currentProfile={currentProfile}
+                    setSelectedImg={setSelectedImg}
+                    deleteOpen={deleteOpen}
+                    setDeleteOpen={setDeleteOpen}
+                    setImageOpen={setImageOpen}
+                  />
+                  {deleteOpen && (
+                    <DeleteMenu
+                  
+                    selectedImg={selectedImg}
+                    setSelectedImg={setSelectedImg}
+                    setDeleteOpen={setDeleteOpen}
+                    />
+                  )}
+                  {imageOpen && (
+                    <Modal setImageOpen={setImageOpen} selectedImg={selectedImg} setSelectedImg={setSelectedImg} />
+                  )}
+                </div>
+              )}
+               
+               </div> }
+            />
 
-      {currentProfile && (
-        <div className="main-section">
-          <Navbar
-            setLoggedIn={setLoggedIn}
-            setCurrentProfile={setCurrentProfile}
-          />
-          
-          <ImageGrid
-            currentProfile={currentProfile}
-            setSelectedImg={setSelectedImg}
-          />
-          {selectedImg && (
-            <Modal selectedImg={selectedImg} setSelectedImg={setSelectedImg} />
-          )}
-        </div>
-      )}
+           
+
+     
+      </Routes>
     </div>
+    </Router>
   );
 }
 

@@ -5,10 +5,26 @@ import { Typography } from "@mui/material";
 import { auth } from "../firebase/config";
 import UploadForm from "./UploadForm";
 import { Upload } from "@mui/icons-material";
+import DeleteIcon from '@mui/icons-material/Delete';
+import { Link } from 'react-router-dom'
 
-export default function ImageGrid({ currentProfile, setSelectedImg }) {
+export default function ImageGrid({ setImageOpen, setDeleteOpen, deleteOpen, currentProfile, setSelectedImg }) {
   const { docs } = useFirestore("images");
+const handleDeleteClick = (doc) => {
+  setSelectedImg({
+    url: doc.url,
+    id: doc.id,
+  })
+  setDeleteOpen(true)
+}
 
+const handleImageClick = (doc) => {
+  setSelectedImg({
+    url: doc.url,
+    id: doc.id,
+  })
+  setImageOpen(true)
+}
   console.log("!!!", docs);
   console.log("currentprofile=", currentProfile);
 
@@ -114,23 +130,26 @@ export default function ImageGrid({ currentProfile, setSelectedImg }) {
               {/* Remove class [ border-gray-300  dark:border-gray-700 border-dashed border-2 ] to remove dotted border */}
 
               <UploadForm />
-              <div className="container mx-auto grid sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 pt-6 gap-4">
+              <div className="container mx-auto grid sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 pt-6 gap-3">
                 {docs
                   .filter((doc) => doc.userId === currentProfile)
                   .map((filteredDoc) => (
-                    <div className="rounded">
+                    <div className="rounded relative">
                       <img
                         onClick={() =>
-                          setSelectedImg({
-                            url: filteredDoc.url,
-                            id: filteredDoc.id,
-                          })
+                          handleImageClick(filteredDoc)
                         }
-                        className="img rounded"
+                        className="img rounded-sm shadow-md h-full object-fill"
                         src={filteredDoc.url}
                         alt="img"
                       />
+                      <div onClick={()=> handleDeleteClick(filteredDoc)} className='absolute bottom-0.5 right-0 text-white hover:cursor-pointer'>
+                       
+                      <DeleteIcon className="hover-icon hover:text-gray-200 shadow-md"/>
+                      
+                      </div>
                     </div>
+                    
                   ))}
               </div>
             </div>

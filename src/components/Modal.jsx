@@ -1,8 +1,9 @@
 import { handleDelete } from "../hooks/handleDelete"
 
-export default function Modal({ selectedImg, setSelectedImg }){
+export default function Modal({ setImageOpen, selectedImg, setSelectedImg }){
   const handleClick = (e) => {
     if(e.target.classList.contains('backdrop', 'deleteButton')){
+    setImageOpen(false)
     setSelectedImg(null)
 
     }

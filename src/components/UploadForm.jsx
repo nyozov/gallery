@@ -6,6 +6,7 @@ import SvgButton from "../components/SvgButton";
 import FileUploadIcon from "@mui/icons-material/FileUpload";
 import { useDropzone } from "react-dropzone";
 import UploadFileIcon from '@mui/icons-material/UploadFile';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 const Input = styled("input")({
   display: "none",
