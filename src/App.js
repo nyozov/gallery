@@ -10,20 +10,18 @@ import {
   BrowserRouter as Router,
   Routes as Switch,
   Route,
-  Link
+  Link,
 } from "react-router-dom";
-
 
 function App() {
   const [selectedImg, setSelectedImg] = useState(null);
   const [LoggedIn, setLoggedIn] = useState(false);
- 
+
   //show loading screen while user is being fetched by firebase auth
   const [loading, setLoading] = useState(false);
   //controls which user's profile is being viewed
-  const [currentProfile, setCurrentProfile] = useState('')
-  console.log('currentprofile', currentProfile)
-  
+  const [currentProfile, setCurrentProfile] = useState("");
+  console.log("currentprofile", currentProfile);
 
   // useEffect(() => {
   //   setLoading(true);
@@ -32,11 +30,11 @@ function App() {
   // useEffect(() => {
   //   window.localStorage.setItem('currentProfile', currentProfile);
   // }, [currentProfile]);
-  
+
   auth.onAuthStateChanged((user) => {
     if (!user) {
       console.log("auth did not work");
-      setLoading(false)
+      setLoading(false);
     } else {
       console.log("auth worked");
       console.log(user);
@@ -46,42 +44,31 @@ function App() {
   });
 
   return (
-    
     <div className="App">
-     
+      {!currentProfile && (
+        <LoginPage
+          setCurrentProfile={setCurrentProfile}
+          setLoggedIn={setLoggedIn}
+        />
+      )}
 
-     
+      {currentProfile && (
+        <div className="main-section">
+          <Navbar
+            setLoggedIn={setLoggedIn}
+            setCurrentProfile={setCurrentProfile}
+          />
           
-          
-      
-         {!currentProfile &&  <LoginPage
-      setCurrentProfile={setCurrentProfile} 
-      setLoggedIn={setLoggedIn}
-       />}
-              
-                {currentProfile && <div className="main-section">
-               
-                <Navbar
-                setLoggedIn={setLoggedIn}
-                setCurrentProfile={setCurrentProfile}
-                 />
-                 <UploadForm />
-            <ImageGrid currentProfile={currentProfile} setSelectedImg={setSelectedImg} />
-            {selectedImg && (
-              <Modal
-                selectedImg={selectedImg}
-                setSelectedImg={setSelectedImg}
-              />
-            )}
-            </div>}
-               
-              
-         
-            
-          
-       
+          <ImageGrid
+            currentProfile={currentProfile}
+            setSelectedImg={setSelectedImg}
+          />
+          {selectedImg && (
+            <Modal selectedImg={selectedImg} setSelectedImg={setSelectedImg} />
+          )}
+        </div>
+      )}
     </div>
-    
   );
 }
 

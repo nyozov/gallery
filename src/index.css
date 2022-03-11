@@ -1,21 +1,17 @@
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 body {
-  margin: 0 auto !important;
-  max-width:960px;
-  font-family: 'Bebas Neue';
+  
+
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
 
 
-}
-
-.main-section{
-  margin: 0 auto;
-  width: 90%;
 
 }
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
@@ -30,19 +26,6 @@ code {
 .output{
 }
 
-.upload-form{
-  margin-top: 3em;
-}
-
-
-
-.img{
-  width: 320px;
-  height: 320px;
-  object-fit: cover;
-  border-radius: 10px;
-  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
-}
 
 
 
@@ -62,9 +45,3 @@ code {
   box-shadow: 3px 5px 7px rgba(0, 0, 0, 0.5);
 }
 
-@media only screen and (max-width: 600px) {
-.css-1t29gy6-MuiToolbar-root{
-  max-width: 350px;
-}
-
-}
