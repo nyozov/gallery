@@ -1,15 +1,15 @@
 import { useState } from "react";
 import ProgressBar from "./ProgressBar";
 import { styled } from "@mui/material/styles";
-import Button from "@mui/material/Button";
+import {IconButton, Button} from "@mui/material";
 import SvgButton from "../components/SvgButton";
 import FileUploadIcon from "@mui/icons-material/FileUpload";
 import { useDropzone } from "react-dropzone";
+import UploadFileIcon from '@mui/icons-material/UploadFile';
 
 const Input = styled("input")({
   display: "none",
 });
-
 
 const UploadButton = () => {
   return (
@@ -29,12 +29,10 @@ export default function UploadForm() {
     accept: "image/*",
     onDrop: (acceptedFiles) => {
       setFile(
-        
-          Object.assign(acceptedFiles[0], {
-            preview: URL.createObjectURL(acceptedFiles[0]),
-          })
-        )
-      
+        Object.assign(acceptedFiles[0], {
+          preview: URL.createObjectURL(acceptedFiles[0]),
+        })
+      );
     },
   });
 
@@ -53,7 +51,7 @@ export default function UploadForm() {
   };
   return (
     <form className="upload-form">
-      <label htmlFor="contained-button-file">
+      {/* <label htmlFor="contained-button-file">
         <SvgButton color="primary" variant="contained" component="span">
           <Input
             type="file"
@@ -63,18 +61,35 @@ export default function UploadForm() {
           <FileUploadIcon />
           Upload
         </SvgButton>
-      </label>
-      <div>
-      <div {...getRootProps()}>
-        <Input {...getInputProps()} onChange={changeHandler}/>
-        <p>Drop files here</p>
-      </div>
-    </div>
+      </label> */}
+      <div  className="flex justify-center items-center w-full h-24">
+        <div
+
+        className="border-dashed rounded border-2 text-center border-blue-300 w-full h-full"
+          {...getRootProps()}
+         
+        >
+          <Input className="" {...getInputProps()} onChange={changeHandler} />
+         {!file && 
+         <>
+          <p className='mt-2.5 font-bold text-gray-800'>Drag and drop your file here or</p>
+       <div className="bg-blue-400 hover:bg-blue-500 text-white font-bold py-2 px-4 rounded inline-flex items-center">
+     
+  <span><FileUploadIcon/> Upload File</span>
+</div>
+
+
+      </>
+         }
+         
+        </div>
+     
 
       <div className="output">
         {error && <div className="error">{error}</div>}
         {file && <div>{file.name}</div>}
         {file && <ProgressBar file={file} setFile={setFile} />}
+      </div>
       </div>
     </form>
   );
