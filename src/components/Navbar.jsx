@@ -14,6 +14,7 @@ import MoreIcon from '@mui/icons-material/MoreVert';
 import { auth } from '../firebase/config';
 import { Button } from '@mui/material';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom'
 
 
 const Search = styled('div')(({ theme }) => ({
@@ -61,11 +62,15 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 export default function PrimarySearchAppBar({ setLoggedIn, setCurrentProfile }) {
   const [anchorEl, setAnchorEl] = useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
-
+  const navigate = useNavigate()
 
 
   const signOut = () => {
+    
     auth.signOut().then(()=> {
+      setLoggedIn(false)
+      
+
       
       
       
@@ -117,7 +122,7 @@ export default function PrimarySearchAppBar({ setLoggedIn, setCurrentProfile }) 
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>{auth.currentUser.email}</MenuItem>
+      <MenuItem onClick={handleMenuClose}>{auth.currentUser.email || ''}</MenuItem>
       <MenuItem onClick={()=> signOut()} color="inherit">Sign Out</MenuItem>
     </Menu>
   );

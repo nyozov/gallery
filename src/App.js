@@ -6,14 +6,9 @@ import { useEffect, useState } from "react";
 import LoginPage from "./components/LoginPage";
 import { auth } from "./firebase/config";
 import Loading from "./components/Loading";
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  Link,
-} from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 
-import DeleteMenu from './components/DeleteMenu'
+import DeleteMenu from "./components/DeleteMenu";
 import { Delete } from "@mui/icons-material";
 
 function App() {
@@ -37,70 +32,80 @@ function App() {
   //   window.localStorage.setItem('currentProfile', currentProfile);
   // }, [currentProfile]);
 
-  auth.onAuthStateChanged((user) => {
-    if (!user) {
-      console.log("auth did not work");
-      setLoading(false);
-    } else {
-      console.log("auth worked");
-      console.log(user);
-      setLoading(false);
-      setLoggedIn(true);
-    }
-  });
+  useEffect(()=> {
+    setLoading(true)
+    console.log(auth)
+    auth.onAuthStateChanged((user) => {
+     
+      if (!user) {
+        
+        console.log("auth did not work");
+       
+       setLoading(false)
+      } else {
+        setCurrentProfile(user.uid)
+      
+        console.log("auth worked");
+        console.log(user);
+        setLoading(false)
+        setLoggedIn(true);
+        
+      }
+    });
+  }, [])
+  
 
   return (
     <Router>
-    <div className="App">
-      <Routes>
-      <Route
-              path="/"
-              element={ 
-                <div>
-                
-                {!currentProfile && (
-                <LoginPage
-                  setCurrentProfile={setCurrentProfile}
-                  setLoggedIn={setLoggedIn}
-                />
-              )}
-        
-              {currentProfile && (
-                <div className="main-section">
-                  <Navbar
-                    setLoggedIn={setLoggedIn}
+      <div className="App">
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <div>
+                {loading && <Loading/>}
+                {!loading && !LoggedIn && (
+                  <LoginPage
                     setCurrentProfile={setCurrentProfile}
+                    setLoggedIn={setLoggedIn}
                   />
-                  
-                  <ImageGrid
-                    currentProfile={currentProfile}
-                    setSelectedImg={setSelectedImg}
-                    deleteOpen={deleteOpen}
-                    setDeleteOpen={setDeleteOpen}
-                    setImageOpen={setImageOpen}
-                  />
-                  {deleteOpen && (
-                    <DeleteMenu
-                  
-                    selectedImg={selectedImg}
-                    setSelectedImg={setSelectedImg}
-                    setDeleteOpen={setDeleteOpen}
+                )}
+
+                {!loading && LoggedIn && (
+                  <div className="main-section">
+                    <Navbar
+                      setLoggedIn={setLoggedIn}
+                      setCurrentProfile={setCurrentProfile}
                     />
-                  )}
-                  {imageOpen && (
-                    <Modal setImageOpen={setImageOpen} selectedImg={selectedImg} setSelectedImg={setSelectedImg} />
-                  )}
-                </div>
-              )}
-               
-               </div> }
-            />
 
-           
-
-     
-      </Routes>
-    </div>
+                    <ImageGrid
+                      currentProfile={currentProfile}
+                      setSelectedImg={setSelectedImg}
+                      deleteOpen={deleteOpen}
+                      setDeleteOpen={setDeleteOpen}
+                      setImageOpen={setImageOpen}
+                    />
+                    {deleteOpen && (
+                      <DeleteMenu
+                        selectedImg={selectedImg}
+                        setSelectedImg={setSelectedImg}
+                        setDeleteOpen={setDeleteOpen}
+                      />
+                    )}
+                    {imageOpen && (
+                      <Modal
+                        setImageOpen={setImageOpen}
+                        selectedImg={selectedImg}
+                        setSelectedImg={setSelectedImg}
+                      />
+                    )}
+                  </div>
+                )}
+              </div>
+            }
+          />
+        </Routes>
+      </div>
     </Router>
   );
 }

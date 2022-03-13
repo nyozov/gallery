@@ -197,7 +197,7 @@ export default function SignInSide({setCurrentProfile, setLoggedIn}) {
                 </Button>
                 <GoogleButton
                   type="submit"
-                  fullWidth
+                
                   variant="contained"
                   sx={{ mt: 3, mb: 2 }}
                   onClick={() => googleLogin()}
