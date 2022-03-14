@@ -10,9 +10,27 @@ import { Link } from 'react-router-dom'
 import {AccountBox as ProfileIcon} from '@mui/icons-material'
 import { useEffect } from "react";
 
-export default function ImageGrid({ setImageOpen, setDeleteOpen, deleteOpen, currentProfile, setSelectedImg }) {
+export default function ImageGrid({ setLoggedIn, setImageOpen, setDeleteOpen, deleteOpen, currentProfile, setSelectedImg }) {
   const { docs } = useFirestore("images");
+  const signOut = () => {
+    
+    auth.signOut().then(()=> {
+      setLoggedIn(false)
+      
+
+      
+      
+      
+      
+     
   
+  
+    
+      console.log('sign-out successful')
+    }).catch((err)=>{
+      console.log('err:', err)
+    })
+  }
 const handleDeleteClick = (doc) => {
   setSelectedImg({
     url: doc.url,
@@ -52,7 +70,7 @@ const handleImageClick = (doc) => {
             <button className="mx-2 my-2 bg-white transition duration-150 ease-in-out focus:outline-none hover:bg-gray-100 rounded text-indigo-700 px-6 py-2 text-sm">
               <ProfileIcon/> {auth.currentUser.email}
             </button>
-            <button className="transition duration-150 ease-in-out hover:bg-indigo-600 focus:outline-none border bg-indigo-700 rounded text-white px-8 py-2 text-sm">
+            <button onClick={() => signOut()} className="transition duration-150 ease-in-out hover:bg-indigo-600 focus:outline-none border bg-indigo-700 rounded text-white px-8 py-2 text-sm">
               Sign Out
             </button>
           </div>

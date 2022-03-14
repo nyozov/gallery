@@ -79,6 +79,7 @@ function App() {
                     />
 
                     <ImageGrid
+                      setLoggedIn={setLoggedIn}
                       currentProfile={currentProfile}
                       setSelectedImg={setSelectedImg}
                       deleteOpen={deleteOpen}
