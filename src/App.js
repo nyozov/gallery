@@ -73,10 +73,7 @@ function App() {
 
                 {!loading && LoggedIn && (
                   <div className="main-section">
-                    <Navbar
-                      setLoggedIn={setLoggedIn}
-                      setCurrentProfile={setCurrentProfile}
-                    />
+                  
 
                     <ImageGrid
                       setLoggedIn={setLoggedIn}

@@ -9,28 +9,11 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { Link } from 'react-router-dom'
 import {AccountBox as ProfileIcon} from '@mui/icons-material'
 import { useEffect } from "react";
+import ProfileButton from '../components/ProfileButton'
 
 export default function ImageGrid({ setLoggedIn, setImageOpen, setDeleteOpen, deleteOpen, currentProfile, setSelectedImg }) {
   const { docs } = useFirestore("images");
-  const signOut = () => {
-    
-    auth.signOut().then(()=> {
-      setLoggedIn(false)
-      
-
-      
-      
-      
-      
-     
   
-  
-    
-      console.log('sign-out successful')
-    }).catch((err)=>{
-      console.log('err:', err)
-    })
-  }
 const handleDeleteClick = (doc) => {
   setSelectedImg({
     url: doc.url,
@@ -52,27 +35,22 @@ const handleImageClick = (doc) => {
   return (
     <>
       <div className="absolute bg-gray-200 w-full h-full">
-        {/* Navigation starts */}
-        {/* Mobile */}
-
-        {/* Mobile */}
-
-        {/* Navigation ends */}
-        {/* Page title starts */}
-        <div className="my-6 lg:my-12 container px-6 mx-auto flex flex-col lg:flex-row items-start lg:items-center justify-between pb-4 border-b border-gray-300">
+      
+        <div className="my-12 container px-6 mx-auto flex flex-row items-start lg:items-center justify-between pb-4 border-b border-gray-300">
           <div>
             <h4 className="text-2xl font-bold leading-tight text-gray-800">
               Your Images
             </h4>
           
           </div>
-          <div className="mt-6 lg:mt-0">
-            <button className="mx-2 my-2 bg-white transition duration-150 ease-in-out focus:outline-none hover:bg-gray-100 rounded text-indigo-700 px-6 py-2 text-sm">
+          <div className="mt-6">
+            {/* <button className="mx-2 my-2 bg-white transition duration-150 ease-in-out focus:outline-none hover:bg-gray-100 rounded text-indigo-700 px-6 py-2 text-sm">
               <ProfileIcon/> {auth.currentUser.email}
             </button>
             <button onClick={() => signOut()} className="transition duration-150 ease-in-out hover:bg-indigo-600 focus:outline-none border bg-indigo-700 rounded text-white px-8 py-2 text-sm">
               Sign Out
-            </button>
+            </button> */}
+            <ProfileButton setLoggedIn={setLoggedIn}/>
           </div>
         </div>
         {/* Page title ends */}
