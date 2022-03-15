@@ -82,7 +82,7 @@ export default function UploadForm() {
 
       </>
          }
-          <div className="output">
+          <div className="output mt-2">
         {error && <div className="error">{error}</div>}
         {file && <div>{file.name}</div>}
         {file && <ProgressBar file={file} setFile={setFile} />}
