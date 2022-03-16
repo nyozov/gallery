@@ -1,5 +1,3 @@
-import Navbar from "./components/Navbar";
-import UploadForm from "./components/UploadForm";
 import ImageGrid from "./components/ImageGrid";
 import Modal from "./components/Modal";
 import { useEffect, useState } from "react";
@@ -7,9 +5,7 @@ import LoginPage from "./components/LoginPage";
 import { auth } from "./firebase/config";
 import Loading from "./components/Loading";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
-
 import DeleteMenu from "./components/DeleteMenu";
-import { Delete } from "@mui/icons-material";
 
 function App() {
   const [selectedImg, setSelectedImg] = useState(null);
@@ -24,36 +20,24 @@ function App() {
   const [currentProfile, setCurrentProfile] = useState("");
   console.log("currentprofile", currentProfile);
 
-  // useEffect(() => {
-  //   setLoading(true);
-  //   setCurrentProfile(JSON.parse(window.localStorage.getItem('currentProfile')))
-  // }, []);
-  // useEffect(() => {
-  //   window.localStorage.setItem('currentProfile', currentProfile);
-  // }, [currentProfile]);
-
-  useEffect(()=> {
-    setLoading(true)
-    console.log(auth)
+  useEffect(() => {
+    setLoading(true);
+    console.log(auth);
     auth.onAuthStateChanged((user) => {
-     
       if (!user) {
-        
         console.log("auth did not work");
-       
-       setLoading(false)
+
+        setLoading(false);
       } else {
-        setCurrentProfile(user.uid)
-      
+        setCurrentProfile(user.uid);
+
         console.log("auth worked");
         console.log(user);
-        setLoading(false)
+        setLoading(false);
         setLoggedIn(true);
-        
       }
     });
-  }, [])
-  
+  }, []);
 
   return (
     <Router>
@@ -63,7 +47,7 @@ function App() {
             path="/"
             element={
               <div>
-                {loading && <Loading/>}
+                {loading && <Loading />}
                 {!loading && !LoggedIn && (
                   <LoginPage
                     setCurrentProfile={setCurrentProfile}
@@ -73,8 +57,6 @@ function App() {
 
                 {!loading && LoggedIn && (
                   <div className="main-section">
-                  
-
                     <ImageGrid
                       setLoggedIn={setLoggedIn}
                       currentProfile={currentProfile}
