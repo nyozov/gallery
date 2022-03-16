@@ -4,6 +4,8 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import ProfileButton from "../components/ProfileButton";
 import Empty from "./Empty";
 import { auth } from "firebase";
+import { useState, useEffect } from "react";
+import CircularProgress from '@mui/material/CircularProgress';
 
 export default function ImageGrid({
   setLoggedIn,
@@ -12,10 +14,27 @@ export default function ImageGrid({
   currentProfile,
   setSelectedImg,
 }) {
+  const [imageLoaded, setImageLoaded] = useState(false);
   const { docs } = useFirestore("images");
   const emptyFilter = () => {
     return docs.filter((doc)=> doc.userId === currentProfile).length
   }
+
+  const [docsLoaded, setDocsLoaded] = useState(false)
+
+  const noImagesButLoaded = () => {
+    if (docsLoaded && !emptyFilter()){
+      return true
+    }
+    return false
+  }
+
+  useEffect(() => {
+   if (docs.length){
+     setDocsLoaded(true)
+   }
+  }, [docs])
+  
 
   const handleDeleteClick = (doc) => {
     setSelectedImg({
@@ -35,13 +54,15 @@ export default function ImageGrid({
   console.log("!!!", docs);
   console.log("currentprofile=", currentProfile);
 
+
+
   return (
     <>
       <div className="absolute bg-gray-200 w-full h-full">
         <div className="my-12 container px-6 mx-auto flex flex-row items-start lg:items-center justify-between pb-4 border-b border-gray-300">
           <div>
-            <h4 className="text-2xl font-bold leading-tight text-gray-800">
-              Your Images ({emptyFilter()})
+            <h4 className="flex text-xl font-bold leading-tight text-gray-800">
+              Your Images {imageLoaded &&  <div className='ml-1'>({emptyFilter()})</div>}
             </h4>
           </div>
      
@@ -53,21 +74,30 @@ export default function ImageGrid({
         <div className="container mx-auto px-6">
           <div className="w-full h-64 rounded">
             <div>
-              <UploadForm />{
-                console.log(emptyFilter())
-              }
-              {!emptyFilter() &&  <Empty />}
-              <div className="container mx-auto grid  grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 pt-6 gap-3">
+              <UploadForm />
+              {!imageLoaded && !noImagesButLoaded() && <div className='flex flex-col justify-center items-center w-full h-44'>
+                <CircularProgress/>
+                <p className="text-gray-500 ml-2 mt-2">loading images...</p>
+                </div>
+                }
+             
+             
+
+              {!emptyFilter() && docsLoaded && <Empty />}
+              <div className={!imageLoaded ? 'invisible' : 'container mx-auto grid  grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 pt-6 gap-3'}>
                 {docs
                   .filter((doc) => doc.userId === currentProfile)
                   .map((filteredDoc) => (
                     <div
                       key={filteredDoc.id}
+
                       className="rounded flex justify-center relative"
                     >
                       <img
+                      
+                      onLoad={()=> setTimeout(()=> setImageLoaded(true), 2000)}
                         onClick={() => handleImageClick(filteredDoc)}
-                        className="img max-h-52 rounded-sm shadow-md h-full object-cover"
+                        className="img max-h-52 rounded-sm shadow-md h-full object-cover hover:cursor-pointer"
                         src={filteredDoc.url}
                         alt="img"
                       />

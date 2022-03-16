@@ -22,7 +22,7 @@ export default function Modal({ setImageOpen, selectedImg, setSelectedImg }) {
       >
         <Close />
       </div>
-      <img src={selectedImg.url} alt="enlarged pic" />
+      <img className='shadow' src={selectedImg.url} alt="enlarged pic" />
     </div>
     </div>
   );
