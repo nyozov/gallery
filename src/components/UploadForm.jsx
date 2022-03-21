@@ -70,7 +70,7 @@ export default function UploadForm() {
           {...getRootProps()}
          
         >
-          <Input className="" {...getInputProps()} onChange={changeHandler} />
+          <Input maxFileSize={100} className="" {...getInputProps()} onChange={changeHandler} />
          {!file && 
          <>
           <p className='mt-2.5 font-bold text-gray-800'>Drag and drop your file here or</p>
