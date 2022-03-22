@@ -16,6 +16,7 @@ import DeleteMenu from "./components/DeleteMenu";
 import SignupPage from "./components/SignupPage";
 
 function App() {
+  const navigate = useNavigate()
   const [selectedImg, setSelectedImg] = useState(null);
   const [LoggedIn, setLoggedIn] = useState(false);
 
@@ -35,8 +36,10 @@ function App() {
     auth.onAuthStateChanged((user) => {
       if (!user) {
         console.log("auth did not work");
-
+        
+        navigate('/login')
         setLoading(false);
+        setLoggedIn(false);
       } else {
         setCurrentProfile(user.uid);
 
@@ -49,7 +52,7 @@ function App() {
   }, []);
 
   return (
-    <Router>
+    
       <div className="App">
       
         <Routes>
@@ -69,10 +72,10 @@ function App() {
             path="/dashboard"
             element={
               <div>
-                {!LoggedIn && <Navigate to='/login'/> }
+               
                 {loading && <Loading />}
 
-                {!loading && (
+                {!loading && LoggedIn && (
                   <div className="main-section">
                     <ImageGrid
                       setLoggedIn={setLoggedIn}
@@ -153,7 +156,7 @@ function App() {
           /> */}
         </Routes>
       </div>
-    </Router>
+    
   );
 }
 
