@@ -6,6 +6,7 @@ import Empty from "./Empty";
 import { auth } from "firebase";
 import { useState, useEffect } from "react";
 import CircularProgress from "@mui/material/CircularProgress";
+import { useNavigate } from 'react-router-dom';
 
 export default function ImageGrid({
   setLoggedIn,
@@ -28,6 +29,8 @@ export default function ImageGrid({
     }
     return false;
   };
+
+  const navigate = useNavigate()
 
   useEffect(() => {
     if (docs.length) {

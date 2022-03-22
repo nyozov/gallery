@@ -2,17 +2,21 @@ import { Fragment } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import { auth } from "../firebase/config";
 import { AccountBox as ProfileIcon } from "@mui/icons-material";
+import { useNavigate} from 'react-router-dom'
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
 export default function Example({ setLoggedIn }) {
+  const navigate = useNavigate()
   const signOut = () => {
     auth
       .signOut()
       .then(() => {
+        navigate('/login')
         setLoggedIn(false);
+       
         console.log("sign-out successful");
       })
       .catch((err) => {

@@ -4,8 +4,16 @@ import { useEffect, useState } from "react";
 import LoginPage from "./components/LoginPage";
 import { auth } from "./firebase/config";
 import Loading from "./components/Loading";
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Link,
+  useNavigate,
+  Navigate,
+} from "react-router-dom";
 import DeleteMenu from "./components/DeleteMenu";
+import SignupPage from "./components/SignupPage";
 
 function App() {
   const [selectedImg, setSelectedImg] = useState(null);
@@ -18,6 +26,7 @@ function App() {
   const [loading, setLoading] = useState(false);
   //controls which user's profile is being viewed
   const [currentProfile, setCurrentProfile] = useState("");
+
   console.log("currentprofile", currentProfile);
 
   useEffect(() => {
@@ -42,8 +51,66 @@ function App() {
   return (
     <Router>
       <div className="App">
+      
         <Routes>
+        <Route path='/' element={LoggedIn ? <Navigate to='/dashboard'/> : <Navigate to='/login'/>}/>
+         
+          
           <Route
+            path="/signup"
+            element={
+              <SignupPage
+                setCurrentProfile={setCurrentProfile}
+                setLoggedIn={setLoggedIn}
+              />
+            }
+          />
+          <Route
+            path="/dashboard"
+            element={
+              <div>
+                {!LoggedIn && <Navigate to='/login'/> }
+                {loading && <Loading />}
+
+                {!loading && (
+                  <div className="main-section">
+                    <ImageGrid
+                      setLoggedIn={setLoggedIn}
+                      currentProfile={currentProfile}
+                      setSelectedImg={setSelectedImg}
+                      deleteOpen={deleteOpen}
+                      setDeleteOpen={setDeleteOpen}
+                      setImageOpen={setImageOpen}
+                    />
+                    {deleteOpen && (
+                      <DeleteMenu
+                        selectedImg={selectedImg}
+                        setSelectedImg={setSelectedImg}
+                        setDeleteOpen={setDeleteOpen}
+                      />
+                    )}
+                    {imageOpen && (
+                      <Modal
+                        setImageOpen={setImageOpen}
+                        selectedImg={selectedImg}
+                        setSelectedImg={setSelectedImg}
+                      />
+                    )}
+                  </div>
+                )}
+              </div>
+            }
+          />
+          <Route
+            path="/login"
+            element={
+              <LoginPage
+                setCurrentProfile={setCurrentProfile}
+                setLoggedIn={setLoggedIn}
+              />
+            }
+          />
+          {/* <Route
             path="/"
             element={
               <div>
@@ -83,7 +150,7 @@ function App() {
                 )}
               </div>
             }
-          />
+          /> */}
         </Routes>
       </div>
     </Router>

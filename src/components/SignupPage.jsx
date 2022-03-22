@@ -1,3 +1,4 @@
+import React from 'react'
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -8,57 +9,21 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import firebase from "firebase";
-import { auth } from "../firebase/config";
-import { useState } from "react";
-import GoogleButton from "react-google-button";
 import LoginIcon from "@mui/icons-material/Login";
-import { Link as RouterLink } from "react-router-dom";
+import { useState } from 'react';
+import { auth } from '../firebase/config';
 import { addUserToDB } from "../hooks/handleDelete";
-import GoogleIcon from "../assets/google-logo.png";
 import { useNavigate } from 'react-router-dom'
-
-function Copyright(props) {
-  return (
-    <Typography
-      variant="body2"
-      color="text.secondary"
-      align="center"
-      {...props}
-    >
-      {"Copyright © "}
-      <Link color="inherit">Your Website</Link> {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
 
 const theme = createTheme();
 
-export default function SignInSide({ setCurrentProfile, setLoggedIn }) {
+
+export default function SignupPage({ setCurrentProfile, setLoggedIn }) {
   
   const [registerEmail, setRegisterEmail] = useState("");
   const [registerPassword, setRegisterPassword] = useState("");
-  const [signInEmail, setSignInEmail] = useState("");
-  const [signInPassword, setSignInPassword] = useState("");
-
+  
   const navigate = useNavigate();
-
-  const signIn = () => {
-    auth
-      .signInWithEmailAndPassword(signInEmail, signInPassword)
-      .then((userCredential) => {
-        // Signed in
-        const user = userCredential.user;
-        setCurrentProfile(user.uid);
-        console.log(user.uid);
-        navigate('/dashboard')
-        // ...
-      })
-      .catch((error) => {
-        console.log(error.message);
-      });
-  };
 
   const register = () => {
     auth
@@ -66,6 +31,7 @@ export default function SignInSide({ setCurrentProfile, setLoggedIn }) {
       .then((userCredential) => {
         addUserToDB(userCredential.user.uid, userCredential.user.email);
         setLoggedIn(true);
+        navigate('/dashboard');
         // Signed in
         // const user = userCredential.user;
         // console.log(user)
@@ -79,24 +45,9 @@ export default function SignInSide({ setCurrentProfile, setLoggedIn }) {
         // ..
       });
   };
-
-  const googleLogin = () => {
-    const provider = new firebase.auth.GoogleAuthProvider();
-    firebase
-      .auth()
-      .signInWithPopup(provider)
-      .then((result) => {
-        addUserToDB(result.user.uid, result.user.email);
-        setCurrentProfile(result.user.uid);
-
-        setLoggedIn(true);
-        navigate('/dashboard')
-        console.log(result);
-      });
-  };
-
   return (
-    <ThemeProvider theme={theme}>
+    <div>
+ <ThemeProvider theme={theme}>
       <Grid container component="main" sx={{ height: "100vh" }}>
         <CssBaseline />
         
@@ -117,7 +68,8 @@ export default function SignInSide({ setCurrentProfile, setLoggedIn }) {
             backgroundPosition: "center",
           }}
         />
-        
+       
+       
           <Grid
             item
             xs={12}
@@ -140,12 +92,12 @@ export default function SignInSide({ setCurrentProfile, setLoggedIn }) {
                 <LoginIcon />
               </Avatar>
               <Typography component="h1" variant="h5">
-                Sign in
+                Sign Up
               </Typography>
-              <Box component="form" noValidate sx={{ mt: 1 }}>
+              <Box noValidate>
                 <TextField
                   onChange={(e) => {
-                    setSignInEmail(e.target.value);
+                    setRegisterEmail(e.target.value);
                   }}
                   margin="normal"
                   required
@@ -156,10 +108,9 @@ export default function SignInSide({ setCurrentProfile, setLoggedIn }) {
                   autoComplete="email"
                   autoFocus
                 />
-                
                 <TextField
                   onChange={(e) => {
-                    setSignInPassword(e.target.value);
+                    setRegisterPassword(e.target.value);
                   }}
                   margin="normal"
                   required
@@ -168,51 +119,33 @@ export default function SignInSide({ setCurrentProfile, setLoggedIn }) {
                   label="Password"
                   type="password"
                   id="password"
-                  autoComplete="current-password"
                 />
-                <div
-                  className="flex justify-center items-center flex-col
-                w-full"
-                >
-                  <Button
-                    onClick={signIn}
-                    fullWidth
-                    variant="contained"
-                    sx={{ mt: 3, mb: 2 }}
-                  >
-                    Sign In
-                  </Button>
-                  <div className="relative w-full">
-                    <div
-                      onClick={() => googleLogin()}
-                      className="flex w-full justify-center items-center px-6 py-2 hover:cursor-pointer rounded bg-white shadow hover:shadow-blue-400 text-gray-500"
-                    >
-                      <img
-                        src={GoogleIcon}
-                        className="absolute left-4 h-4 w-4 mr-4"
-                      />
-                      Sign in with Google
-                    </div>
-                  </div>
 
-                  
-                </div>
-                <Grid container className='mt-4'>
-                
+                <Button
+                  onClick={register}
+                  fullWidth
+                  variant="contained"
+                  sx={{ mt: 3, mb: 2 }}
+                >
+                  Sign Up
+                </Button>
+
+                <Grid container>
                   <Grid item>
-                    <Link className='hover:cursor-pointer' onClick={()=>navigate('/signup')} variant="body2">
-                      {"Don't have an account? Sign Up"}
+                    <Link onClick={()=>navigate('/login')}className='hover:cursor-pointer' variant="body2">
+                      {"Already have an account? Sign in"}
                     </Link>
                   </Grid>
                 </Grid>
-              
+                
               </Box>
             </Box>
           </Grid>
        
-        
-        
       </Grid>
     </ThemeProvider>
-  );
+
+      </div>
+    
+  )
 }
