@@ -72,7 +72,7 @@ function App() {
             path="/dashboard"
             element={
             
-              currentProfile ?
+              
               <div>
                
                 {loading && <Loading />}
@@ -105,8 +105,7 @@ function App() {
                   </div>
                 )}
               </div>
-              :
-              <Navigate to='/login'/>
+             
             }
           />
           <Route
