@@ -13,6 +13,7 @@ export default function ImageGrid({
   setImageOpen,
   setDeleteOpen,
   currentProfile,
+  setCurrentProfile,
   setSelectedImg,
 }) {
   const [imageLoaded, setImageLoaded] = useState(false);
@@ -67,7 +68,7 @@ export default function ImageGrid({
           </div>
 
           <div className="mt-6">
-            <ProfileButton setLoggedIn={setLoggedIn} />
+            <ProfileButton setCurrentProfile={setCurrentProfile} setLoggedIn={setLoggedIn} />
           </div>
         </div>
         {/* Page title ends */}

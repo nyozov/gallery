@@ -8,7 +8,7 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function Example({ setLoggedIn }) {
+export default function Example({ setLoggedIn, setCurrentProfile }) {
   const navigate = useNavigate()
   const signOut = () => {
     auth
@@ -16,6 +16,7 @@ export default function Example({ setLoggedIn }) {
       .then(() => {
         navigate('/login')
         setLoggedIn(false);
+        setCurrentProfile('')
        
         console.log("sign-out successful");
       })

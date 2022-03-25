@@ -52,6 +52,7 @@ export default function SignInSide({ setCurrentProfile, setLoggedIn }) {
         const user = userCredential.user;
         setCurrentProfile(user.uid);
         console.log(user.uid);
+        setLoggedIn(true);
         navigate('/dashboard')
         // ...
       })

@@ -71,6 +71,8 @@ function App() {
           <Route
             path="/dashboard"
             element={
+            
+              currentProfile ?
               <div>
                
                 {loading && <Loading />}
@@ -80,6 +82,7 @@ function App() {
                     <ImageGrid
                       setLoggedIn={setLoggedIn}
                       currentProfile={currentProfile}
+                      setCurrentProfile={setCurrentProfile}
                       setSelectedImg={setSelectedImg}
                       deleteOpen={deleteOpen}
                       setDeleteOpen={setDeleteOpen}
@@ -102,6 +105,8 @@ function App() {
                   </div>
                 )}
               </div>
+              :
+              <Navigate to='/login'/>
             }
           />
           <Route
