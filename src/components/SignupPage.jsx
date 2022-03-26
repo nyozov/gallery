@@ -30,6 +30,8 @@ export default function SignupPage({ setCurrentProfile, setLoggedIn }) {
       .createUserWithEmailAndPassword(registerEmail, registerPassword)
       .then((userCredential) => {
         addUserToDB(userCredential.user.uid, userCredential.user.email);
+        const user = userCredential.user;
+        setCurrentProfile(user.uid);
         setLoggedIn(true);
         navigate('/dashboard');
         // Signed in
@@ -86,6 +88,7 @@ export default function SignupPage({ setCurrentProfile, setLoggedIn }) {
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
+                
               }}
             >
               <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
@@ -120,7 +123,10 @@ export default function SignupPage({ setCurrentProfile, setLoggedIn }) {
                   type="password"
                   id="password"
                 />
-
+ <div
+                className="flex justify-center items-center flex-col
+                w-full"
+              >
                 <Button
                   onClick={register}
                   fullWidth
@@ -129,6 +135,7 @@ export default function SignupPage({ setCurrentProfile, setLoggedIn }) {
                 >
                   Sign Up
                 </Button>
+                </div>
 
                 <Grid container>
                   <Grid item>

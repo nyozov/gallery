@@ -45,15 +45,15 @@ export default function Example({ setLoggedIn, setCurrentProfile }) {
           <div className="py-1">
             <Menu.Item>
               {({ active }) => (
-                <a
-                  href=""
+                <div
+                  
                   className={classNames(
-                    active ? "bg-gray-100 text-gray-900" : "text-gray-700",
+                     "text-gray-700",
                     "block px-4 py-2 text-sm"
                   )}
                 >
                   {auth.currentUser.email}
-                </a>
+                </div>
               )}
             </Menu.Item>
 

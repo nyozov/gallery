@@ -3,10 +3,8 @@ import UploadForm from "./UploadForm";
 import DeleteIcon from "@mui/icons-material/Delete";
 import ProfileButton from "../components/ProfileButton";
 import Empty from "./Empty";
-import { auth } from "firebase";
 import { useState, useEffect } from "react";
 import CircularProgress from "@mui/material/CircularProgress";
-import { useNavigate } from 'react-router-dom';
 
 export default function ImageGrid({
   setLoggedIn,
@@ -31,7 +29,6 @@ export default function ImageGrid({
     return false;
   };
 
-  const navigate = useNavigate()
 
   useEffect(() => {
     if (docs.length) {
@@ -58,6 +55,7 @@ export default function ImageGrid({
 
   return (
     <>
+    <div className={!docsLoaded ? `overflow-hidden` : ''}>
       <div className="absolute bg-gray-200 w-full h-full">
         <div className="my-12 container px-6 mx-auto flex flex-row items-start lg:items-center justify-between pb-4 border-b border-gray-300">
           <div>
@@ -119,6 +117,7 @@ export default function ImageGrid({
             </div>
           </div>
         </div>
+      </div>
       </div>
     </>
   );

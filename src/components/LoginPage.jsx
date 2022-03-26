@@ -11,34 +11,14 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import firebase from "firebase";
 import { auth } from "../firebase/config";
 import { useState } from "react";
-import GoogleButton from "react-google-button";
 import LoginIcon from "@mui/icons-material/Login";
-import { Link as RouterLink } from "react-router-dom";
 import { addUserToDB } from "../hooks/handleDelete";
 import GoogleIcon from "../assets/google-logo.png";
-import { useNavigate } from 'react-router-dom'
-
-function Copyright(props) {
-  return (
-    <Typography
-      variant="body2"
-      color="text.secondary"
-      align="center"
-      {...props}
-    >
-      {"Copyright © "}
-      <Link color="inherit">Your Website</Link> {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
+import { useNavigate } from "react-router-dom";
 
 const theme = createTheme();
 
 export default function SignInSide({ setCurrentProfile, setLoggedIn }) {
-  
-  const [registerEmail, setRegisterEmail] = useState("");
-  const [registerPassword, setRegisterPassword] = useState("");
   const [signInEmail, setSignInEmail] = useState("");
   const [signInPassword, setSignInPassword] = useState("");
 
@@ -53,31 +33,11 @@ export default function SignInSide({ setCurrentProfile, setLoggedIn }) {
         setCurrentProfile(user.uid);
         console.log(user.uid);
         setLoggedIn(true);
-        navigate('/dashboard')
+        navigate("/dashboard");
         // ...
       })
       .catch((error) => {
         console.log(error.message);
-      });
-  };
-
-  const register = () => {
-    auth
-      .createUserWithEmailAndPassword(registerEmail, registerPassword)
-      .then((userCredential) => {
-        addUserToDB(userCredential.user.uid, userCredential.user.email);
-        setLoggedIn(true);
-        // Signed in
-        // const user = userCredential.user;
-        // console.log(user)
-        // console.log('current user = ', auth.currentUser)
-        console.log("usercredentials = ", userCredential);
-
-        // ...
-      })
-      .catch((error) => {
-        console.log(error.message);
-        // ..
       });
   };
 
@@ -91,7 +51,7 @@ export default function SignInSide({ setCurrentProfile, setLoggedIn }) {
         setCurrentProfile(result.user.uid);
 
         setLoggedIn(true);
-        navigate('/dashboard')
+        navigate("/dashboard");
         console.log(result);
       });
   };
@@ -100,7 +60,7 @@ export default function SignInSide({ setCurrentProfile, setLoggedIn }) {
     <ThemeProvider theme={theme}>
       <Grid container component="main" sx={{ height: "100vh" }}>
         <CssBaseline />
-        
+
         <Grid
           item
           xs={false}
@@ -118,101 +78,90 @@ export default function SignInSide({ setCurrentProfile, setLoggedIn }) {
             backgroundPosition: "center",
           }}
         />
-        
-          <Grid
-            item
-            xs={12}
-            sm={8}
-            md={5}
-            component={Paper}
-            elevation={6}
-            square
-          >
-            <Box
-              sx={{
-                my: 8,
-                mx: 4,
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-              }}
-            >
-              <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-                <LoginIcon />
-              </Avatar>
-              <Typography component="h1" variant="h5">
-                Sign in
-              </Typography>
-              <Box component="form" noValidate sx={{ mt: 1 }}>
-                <TextField
-                  onChange={(e) => {
-                    setSignInEmail(e.target.value);
-                  }}
-                  margin="normal"
-                  required
-                  fullWidth
-                  id="email"
-                  label="Email Address"
-                  name="email"
-                  autoComplete="email"
-                  autoFocus
-                />
-                
-                <TextField
-                  onChange={(e) => {
-                    setSignInPassword(e.target.value);
-                  }}
-                  margin="normal"
-                  required
-                  fullWidth
-                  name="password"
-                  label="Password"
-                  type="password"
-                  id="password"
-                  autoComplete="current-password"
-                />
-                <div
-                  className="flex justify-center items-center flex-col
-                w-full"
-                >
-                  <Button
-                    onClick={signIn}
-                    fullWidth
-                    variant="contained"
-                    sx={{ mt: 3, mb: 2 }}
-                  >
-                    Sign In
-                  </Button>
-                  <div className="relative w-full">
-                    <div
-                      onClick={() => googleLogin()}
-                      className="flex w-full justify-center items-center px-6 py-2 hover:cursor-pointer rounded bg-white shadow hover:shadow-blue-400 text-gray-500"
-                    >
-                      <img
-                        src={GoogleIcon}
-                        className="absolute left-4 h-4 w-4 mr-4"
-                      />
-                      Sign in with Google
-                    </div>
-                  </div>
 
-                  
+        <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+          <Box
+            sx={{
+              my: 8,
+              mx: 4,
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
+          >
+            <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+              <LoginIcon />
+            </Avatar>
+            <Typography component="h1" variant="h5">
+              Sign in
+            </Typography>
+            <Box component="form" noValidate sx={{ mt: 1 }}>
+              <TextField
+                onChange={(e) => {
+                  setSignInEmail(e.target.value);
+                }}
+                margin="normal"
+                required
+                fullWidth
+                id="email"
+                label="Email Address"
+                name="email"
+                autoComplete="email"
+                autoFocus
+              />
+
+              <TextField
+                onChange={(e) => {
+                  setSignInPassword(e.target.value);
+                }}
+                margin="normal"
+                required
+                fullWidth
+                name="password"
+                label="Password"
+                type="password"
+                id="password"
+                autoComplete="current-password"
+              />
+              <div
+                className="flex justify-center items-center flex-col
+                w-full"
+              >
+                <Button
+                  onClick={signIn}
+                  fullWidth
+                  variant="contained"
+                  sx={{ mt: 3, mb: 2 }}
+                >
+                  Sign In
+                </Button>
+                <div className="relative w-full">
+                  <div
+                    onClick={() => googleLogin()}
+                    className="flex w-full justify-center items-center px-6 py-2 hover:cursor-pointer rounded bg-white shadow hover:shadow-blue-400 text-gray-500"
+                  >
+                    <img
+                      src={GoogleIcon}
+                      className="absolute left-4 h-4 w-4 mr-4"
+                    />
+                    Sign in with Google
+                  </div>
                 </div>
-                <Grid container className='mt-4'>
-                
-                  <Grid item>
-                    <Link className='hover:cursor-pointer' onClick={()=>navigate('/signup')} variant="body2">
-                      {"Don't have an account? Sign Up"}
-                    </Link>
-                  </Grid>
+              </div>
+              <Grid container className="mt-4">
+                <Grid item>
+                  <Link
+                    className="hover:cursor-pointer"
+                    onClick={() => navigate("/signup")}
+                    variant="body2"
+                  >
+                    {"Don't have an account? Sign Up"}
+                  </Link>
                 </Grid>
-              
-              </Box>
+              </Grid>
             </Box>
-          </Grid>
-       
-        
-        
+          </Box>
+        </Grid>
       </Grid>
     </ThemeProvider>
   );
