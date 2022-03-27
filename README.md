@@ -15,7 +15,7 @@ Deployed on Firebase
 
 ## Links
 Try it out:  
-1: Use google to login or create an account (does not have to be a real email)
-2: Upload any images to test
+1: Use google to login or create an account (does not have to be a real email)  
+2: Upload any images to test  
 [Deployed Website](https://coherent-server-332620.web.app/)
 
