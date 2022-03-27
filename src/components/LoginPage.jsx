@@ -99,6 +99,7 @@ export default function SignInSide({ setCurrentProfile, setLoggedIn }) {
               Sign in
             </Typography>
             <Box className='relative' component="form" noValidate sx={{ mt: 1 }}>
+              
               <TextField
                 onChange={(e) => {
                   setSignInEmail(e.target.value);
@@ -128,7 +129,7 @@ export default function SignInSide({ setCurrentProfile, setLoggedIn }) {
               />
              
   
-                    {signInError && <div className='border-2 w-full border-red text-red-700 text-center absolute'>
+                    {signInError && <div className=' w-full text-red-700 text-center absolute'>
                       <ErrorOutlineIcon/>
                        {signInError}</div>}
                        

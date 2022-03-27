@@ -14,6 +14,7 @@ import { useState } from 'react';
 import { auth } from '../firebase/config';
 import { addUserToDB } from "../hooks/handleDelete";
 import { useNavigate } from 'react-router-dom'
+import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 
 const theme = createTheme();
 
@@ -22,10 +23,14 @@ export default function SignupPage({ setCurrentProfile, setLoggedIn }) {
   
   const [registerEmail, setRegisterEmail] = useState("");
   const [registerPassword, setRegisterPassword] = useState("");
+  const [registerPasswordConfirm, setRegisterPasswordConfirm] = useState("");
+  const [signupError, setSignupError] = useState(false);
+  const [signupError2, setSignupError2] = useState('');
   
   const navigate = useNavigate();
 
   const register = () => {
+    if (registerPassword === registerPasswordConfirm){
     auth
       .createUserWithEmailAndPassword(registerEmail, registerPassword)
       .then((userCredential) => {
@@ -44,9 +49,12 @@ export default function SignupPage({ setCurrentProfile, setLoggedIn }) {
       })
       .catch((error) => {
         console.log(error.message);
+        setSignupError2(error.message)
         // ..
       });
-  };
+  } else {
+    setSignupError(true)
+  }};
   return (
     <div>
  <ThemeProvider theme={theme}>
@@ -97,7 +105,7 @@ export default function SignupPage({ setCurrentProfile, setLoggedIn }) {
               <Typography component="h1" variant="h5">
                 Sign Up
               </Typography>
-              <Box noValidate>
+              <Box className='sm:w-3/4' noValidate>
                 <TextField
                   onChange={(e) => {
                     setRegisterEmail(e.target.value);
@@ -123,6 +131,24 @@ export default function SignupPage({ setCurrentProfile, setLoggedIn }) {
                   type="password"
                   id="password"
                 />
+                   <TextField
+                  onChange={(e) => {
+                    setRegisterPasswordConfirm(e.target.value);
+                  }}
+                  margin="normal"
+                  required
+                  fullWidth
+                  name="passwordConfirm"
+                  label="Confirm Password"
+                  type="password"
+                  id="passwordConfirm"
+                />
+                {signupError && <div className='text-red-700'>
+                  <ErrorOutlineIcon/>
+                  Passwords don't match</div>}
+                {signupError2 && <div className='text-red-700'>
+                  <ErrorOutlineIcon/>
+                  {signupError2}</div>}
  <div
                 className="flex justify-center items-center flex-col
                 w-full"
