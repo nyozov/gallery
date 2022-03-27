@@ -1,6 +1,6 @@
 #  Gallery
 
-Image hosting application where a user can log in and add/delete images in their own personal storage. Fully functional with React router, google auth, firebase auth, and firestore. 
+Image hosting application where a user can log in and add/delete images in their own personal storage. Fully functional with drag and drop image upload, React router, google auth, firebase auth, and firestore. 
 
 ## Stack
 React frontend  
