@@ -15,12 +15,14 @@ import LoginIcon from "@mui/icons-material/Login";
 import { addUserToDB } from "../hooks/handleDelete";
 import GoogleIcon from "../assets/google-logo.png";
 import { useNavigate } from "react-router-dom";
+import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 
 const theme = createTheme();
 
 export default function SignInSide({ setCurrentProfile, setLoggedIn }) {
   const [signInEmail, setSignInEmail] = useState("");
   const [signInPassword, setSignInPassword] = useState("");
+  const [signInError, setSignInError] = useState("");
 
   const navigate = useNavigate();
 
@@ -38,6 +40,7 @@ export default function SignInSide({ setCurrentProfile, setLoggedIn }) {
       })
       .catch((error) => {
         console.log(error.message);
+        setSignInError(error.message)
       });
   };
 
@@ -95,7 +98,7 @@ export default function SignInSide({ setCurrentProfile, setLoggedIn }) {
             <Typography component="h1" variant="h5">
               Sign in
             </Typography>
-            <Box component="form" noValidate sx={{ mt: 1 }}>
+            <Box className='relative' component="form" noValidate sx={{ mt: 1 }}>
               <TextField
                 onChange={(e) => {
                   setSignInEmail(e.target.value);
@@ -123,18 +126,30 @@ export default function SignInSide({ setCurrentProfile, setLoggedIn }) {
                 id="password"
                 autoComplete="current-password"
               />
+             
+  
+                    {signInError && <div className='border-2 w-full border-red text-red-700 text-center absolute'>
+                      <ErrorOutlineIcon/>
+                       {signInError}</div>}
+                       
+                 
+                  
               <div
+              
                 className="flex justify-center items-center flex-col
                 w-full"
               >
+                <div  className={signInError ? 'mt-14 w-full' : 'mt-3 w-full'}>
                 <Button
+               
                   onClick={signIn}
                   fullWidth
                   variant="contained"
-                  sx={{ mt: 3, mb: 2 }}
+                  sx={{ mb: 2 }}
                 >
                   Sign In
                 </Button>
+                </div>
                 <div className="relative w-full">
                   <div
                     onClick={() => googleLogin()}
@@ -157,6 +172,7 @@ export default function SignInSide({ setCurrentProfile, setLoggedIn }) {
                   >
                     {"Don't have an account? Sign Up"}
                   </Link>
+                 
                 </Grid>
               </Grid>
             </Box>
